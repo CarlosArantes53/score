@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: API de Seguro de Veículos
+  description: API para calcular o score de crédito com base nos dados fornecidos.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+paths:
+  /credit-score:
+    post:
+      summary: Calcular o score de crédito
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idade:
+                  type: integer
+                sexo:
+                  type: string
+                  enum: ["male", "female"]
+                anos_experiencia:
+                  type: integer
+                escolaridade:
+                  type: string
+                  enum: ["high school", "university", "none"]
+                renda:
+                  type: string
+                  enum: ["poverty", "working class", "upper class", "middle class"]
+                ano_veiculo:
+                  type: string
+                  enum: ["before 2015", "after 2015"]
+                tipo_veiculo:
+                  type: string
+                  enum: ["sedan", 'sports car']
+                quilometragem_anual:
+                  type: integer
+      responses:
+        '200':
+          description: Score de crédito calculado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  CREDIT_SCORE:
+                    type: number
+        '404':
+          description: Não foi possível encontrar dados correspondentes aos critérios fornecidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
